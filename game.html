@@ -121,33 +121,26 @@
         /* =========================
            TEMPORARY GAME CONTENT
         ========================= */
-
-        #heart {
-            width: 18px;
-            height: 18px;
-
-            background: red;
-
+        
+        #player {
             position: absolute;
-
             left: 50%;
             top: 50%;
-
+            
+            width: 28px;
+            height: 28px;
+            
             transform: translate(-50%, -50%);
-
-            /* temporary heart shape */
-            clip-path: polygon(
-                50% 100%,
-                0% 35%,
-                0% 15%,
-                15% 0%,
-                35% 0%,
-                50% 20%,
-                65% 0%,
-                85% 0%,
-                100% 15%,
-                100% 35%
-            );
+            
+            color: red;
+            
+            font-size: 28px;
+            line-height: 28px;
+            
+            text-align: center;
+            
+            user-select: none;
+            pointer-events: none;
         }
 
 
@@ -329,7 +322,9 @@
 
         <div id="game-container">
 
-            <div id="heart"></div>
+            <div id="player">
+                ♥ 
+            </div>
 
         </div>
 
@@ -360,6 +355,15 @@
 
         let joystickX = 0;
         let joystickY = 0;
+
+        /* =====================================
+        PLAYER
+        ===================================== */
+        
+        const player = document.getElementById("player");
+        let playerX = 50; /*character position*/
+        let playerY = 50;
+        const playerSpeed = 0.08;
 
 
         function moveJoystick(clientX, clientY) {
@@ -547,7 +551,57 @@
 
             }
         );
-
+        
+        /* =====================================
+        PLAYER MOVEMENT
+        ===================================== */
+        function updatePlayer() {
+            
+            /*
+            joystickX:
+            -1 = 左
+            0 = 不动
+            1 = 右
+            
+            joystickY:
+            -1 = 上
+            0 = 不动
+            1 = 下
+            */
+            
+            playerX += joystickX * playerSpeed;
+            playerY += joystickY * playerSpeed;
+            
+            /* =========================
+            LIMIT PLAYER TO GAME AREA
+            ========================= */
+            
+            const halfWidth = 2;
+            const halfHeight = 3;
+            
+            playerX = Math.max(
+                halfWidth,
+                Math.min(100 - halfWidth, playerX)
+            );
+            
+            playerY = Math.max(
+                halfHeight,
+                Math.min(100 - halfHeight, playerY)
+            );
+            
+            /* =========================
+            UPDATE SCREEN
+            ========================= */
+            
+            player.style.left = playerX + "%";
+            player.style.top = playerY + "%";
+            
+            requestAnimationFrame(updatePlayer);
+        }
+        
+        /* Start game loop */
+        updatePlayer();
+    
     </script>
 
 </body>
