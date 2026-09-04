@@ -1,55 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Concert</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+                   maximum-scale=1.0, user-scalable=no">
+
+    <title>Undertale Concert</title>
 
     <style>
+
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background: #000;
-            color: #fff;
+            background: black;
+            color: white;
+            overflow: hidden;
             font-family: Arial, sans-serif;
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .game-container {
 
-        .game-screen {
             width: 100%;
-            max-width: 800px;
             height: 100%;
+
             display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            flex-direction: column;
+
+            background: black;
         }
 
-        .message {
-            font-size: 24px;
+        /* =========================
+           GAME AREA
+        ========================= */
+
+        .game-area {
+
+            flex: 1;
+
+            position: relative;
+
+            border: 3px solid white;
+
+            margin: 10px;
+
+            overflow: hidden;
         }
+
+        .location {
+
+            position: absolute;
+
+            top: 15px;
+            left: 0;
+            right: 0;
+
+            text-align: center;
+
+            font-size: 20px;
+        }
+
+        /* =========================
+           PLAYER
+        ========================= */
+
+        #player {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            font-size: 30px;
+
+            user-select: none;
+        }
+
+        /* =========================
+           OBJECTS
+        ========================= */
+
+        .object {
+
+            position: absolute;
+
+            font-size: 28px;
+
+            user-select: none;
+        }
+
+        #piano {
+
+            left: 20%;
+            top: 55%;
+        }
+
+        #guitar {
+
+            right: 20%;
+            top: 55%;
+        }
+
+        #stage {
+
+            left: 50%;
+            bottom: 15%;
+
+            transform: translateX(-50%);
+
+            font-size: 32px;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+
+            padding: 8px 15px;
+
+            font-size: 16px;
+
+            border-top: 2px solid white;
+
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* =========================
+           CONTROLS
+        ========================= */
+
+        .controls {
+
+            height: 150px;
+
+            position: relative;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 10px 25px;
+        }
+
+        .dpad {
+
+            display: grid;
+
+            grid-template-columns: 50px 50px 50px;
+
+            grid-template-rows: 50px 50px;
+
+            gap: 5px;
+        }
+
+        .control-button {
+
+            background: black;
+
+            color: white;
+
+            border: 2px solid white;
+
+            font-size: 22px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            user-select: none;
+
+            touch-action: manipulation;
+        }
+
+        .control-button:active {
+
+            background: white;
+
+            color: black;
+        }
+
+        .up {
+
+            grid-column: 2;
+        }
+
+        .left {
+
+            grid-column: 1;
+        }
+
+        .down {
+
+            grid-column: 2;
+        }
+
+        .right {
+
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .interact {
+
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <div class="game-screen">
-        <div class="message">
-            Game Screen
+<div class="game-container">
+
+
+    <!-- GAME AREA -->
+
+    <div class="game-area">
+
+        <div class="location">
+            CONCERT HALL
         </div>
+
+
+        <!-- PLAYER -->
+
+        <div id="player">
+            ♥
+        </div>
+
+
+        <!-- OBJECTS -->
+
+        <div id="piano" class="object">
+            🎹
+        </div>
+
+        <div id="guitar" class="object">
+            🎸
+        </div>
+
+        <div id="stage" class="object">
+            🎤
+        </div>
+
     </div>
 
+
+    <!-- STATUS -->
+
+    <div class="status">
+
+        <span>
+            ♥ LV 1
+        </span>
+
+        <span>
+            HP 20/20
+        </span>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+
+        <!-- D-PAD -->
+
+        <div class="dpad">
+
+            <div></div>
+
+            <button
+                class="control-button up"
+                id="up">
+                ▲
+            </button>
+
+            <button
+                class="control-button left"
+                id="left">
+                ◀
+            </button>
+
+            <button
+                class="control-button down"
+                id="down">
+                ▼
+            </button>
+
+            <button
+                class="control-button right"
+                id="right">
+                ▶
+            </button>
+
+        </div>
+
+
+        <!-- INTERACT -->
+
+        <button
+            class="control-button interact"
+            id="interact">
+
+            Z
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const player = document.getElementById("player");
+
+    let playerX = 50;
+    let playerY = 50;
+
+    const speed = 2;
+
+
+    function movePlayer(direction) {
+
+        if (direction === "up") {
+            playerY -= speed;
+        }
+
+        if (direction === "down") {
+            playerY += speed;
+        }
+
+        if (direction === "left") {
+            playerX -= speed;
+        }
+
+        if (direction === "right") {
+            playerX += speed;
+        }
+
+
+        // Prevent player from leaving screen
+
+        playerX = Math.max(5, Math.min(95, playerX));
+
+        playerY = Math.max(5, Math.min(95, playerY));
+
+
+        player.style.left = playerX + "%";
+        player.style.top = playerY + "%";
+
+    }
+
+
+    document
+        .getElementById("up")
+        .addEventListener("click", () => {
+
+            movePlayer("up");
+
+        });
+
+
+    document
+        .getElementById("down")
+        .addEventListener("click", () => {
+
+            movePlayer("down");
+
+        });
+
+
+    document
+        .getElementById("left")
+        .addEventListener("click", () => {
+
+            movePlayer("left");
+
+        });
+
+
+    document
+        .getElementById("right")
+        .addEventListener("click", () => {
+
+            movePlayer("right");
+
+        });
+
+
+    document
+        .getElementById("interact")
+        .addEventListener("click", () => {
+
+            alert("Interaction coming soon!");
+
+        });
+
+</script>
+
+
 </body>
+
 </html>
